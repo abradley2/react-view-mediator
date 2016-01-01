@@ -1,6 +1,9 @@
 # React View Mediator
 Depends on React 0.14.0 or greater, and ReactDOM.
 
+To install:
+`npm install --save react-view-mediator`
+
 ### Purpose
 
 ReactViewMediator is my solution for using React components as views, and then
