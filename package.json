@@ -1,6 +1,6 @@
 {
   "name": "react-view-mediator",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A simple way to swap in and out 'parent component' views",
   "main": "index.js",
   "directories": {
