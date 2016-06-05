@@ -51,4 +51,29 @@ describe('viewMediator', function(){
 
   });
 
+
+  it('should remove views', function(){
+
+    sut.render({
+      'layout': 'MainLayout',
+      'views': {
+        '#content-region': 'PostView'
+      }
+    });
+
+
+    chai.assert.isDefined(ReactDOM.findDOMNode(sut.views['PostView'].ref))
+
+    sut.removeViews('PostView');
+
+    chai.assert.isFalse(sut.views['PostView'].isRendered);
+    chai.assert.isNull(sut.views['PostView'].ref);
+    chai.assert.isNull(ReactDOM.findDOMNode(sut.views['PostView'].ref));
+
+  });
+
+  it('should pass props/params to rendered views', function(){
+
+  });
+
 });

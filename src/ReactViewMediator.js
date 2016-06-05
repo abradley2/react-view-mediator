@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import {values, mapObject, omit} from './util.js';
 
-function createFactories(views) {
+function createFactories(views){
   var retVal = {};
   mapObject(views, (factory, name) => {
     retVal[name] = {
@@ -151,6 +151,8 @@ export default class ReactViewMediator {
    *  });
    */
   render(renderConfig){
+    var params = renderConfig.params || renderConfig.props;
+
     this.renderLayout(renderConfig.layout);
     this.removeViews(
       Object.keys(
