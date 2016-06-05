@@ -1,6 +1,8 @@
 # React View Mediator
 Depends on React 0.14.0 or greater, and ReactDOM.
 
+Tested to work with the latest versions of react (15.0 and higher)
+
 To install:
 `npm install --save react-view-mediator`
 
@@ -25,7 +27,7 @@ reactViewMediator.render({
     '#sidebar-region': 'SidebarView',
     '#content-region': 'PostView'
   },
-  params: {
+  props: {
     'PostView': {
       'postId': 643
     }
@@ -108,7 +110,7 @@ Backbone.Router.extend({
           '#main-region': 'PostView',
           '#sidebar-region': 'SidebarView'
         },
-        params: {
+        props: {
           'PostView': {postId: id}
         }
       });

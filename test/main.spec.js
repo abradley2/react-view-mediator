@@ -73,6 +73,20 @@ describe('viewMediator', function(){
   });
 
   it('should pass props/params to rendered views', function(){
+    
+    sut.render({
+      'layout': 'SidebarLayout',
+      'views': {
+        '#content-region': 'SidebarView'
+      },
+      'props': {
+        'SidebarView': {
+          'testProp': true
+        }
+      }
+    });
+    
+    chai.assert.equal(sut.views['SidebarView'].ref.props.testProp, true);
 
   });
 

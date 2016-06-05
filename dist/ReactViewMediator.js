@@ -1,10 +1,10 @@
 'use strict';
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = require('react');
 
@@ -46,7 +46,7 @@ function createLayouts(layouts) {
 
 /** Class representing a ReactViewMediator. */
 
-var ReactViewMediator = (function () {
+var ReactViewMediator = function () {
 
   /**
    *  A NameKey is the string by which the ReactViewMediator references either a view or a layout.
@@ -81,6 +81,7 @@ var ReactViewMediator = (function () {
   function ReactViewMediator(config) {
     _classCallCheck(this, ReactViewMediator);
 
+    this.config = config;
     this.layout = null;
     this.layouts = createLayouts(config.layouts);
     this.views = createFactories(config.views);
@@ -95,6 +96,7 @@ var ReactViewMediator = (function () {
    *  mark the .isRendered attribute of layouts internally to keep track of this.
    *  @param {string} layout The layout NameKey of the layout to render.
    */
+
 
   _createClass(ReactViewMediator, [{
     key: 'renderLayout',
@@ -154,6 +156,8 @@ var ReactViewMediator = (function () {
     value: function renderViews(newViews, params) {
       var _this2 = this;
 
+      if (!this.el) this.el = document.querySelector(this.config.el);
+
       (0, _util.mapObject)(newViews, function (newView, region) {
         _this2.views[newView].node = _this2.el.querySelector(region);
         _this2.views[newView].isRendered = true;
@@ -183,9 +187,13 @@ var ReactViewMediator = (function () {
   }, {
     key: 'render',
     value: function render(renderConfig) {
+      var params = renderConfig.params || renderConfig.props;
+
+      if (!this.el) this.el = document.querySelector(this.config.el);
+
       this.renderLayout(renderConfig.layout);
       this.removeViews(Object.keys((0, _util.omit)(this.views, (0, _util.values)(renderConfig.views))));
-      this.renderViews(renderConfig.views, renderConfig.params);
+      this.renderViews(renderConfig.views, params);
     }
 
     /**
@@ -204,6 +212,6 @@ var ReactViewMediator = (function () {
   }]);
 
   return ReactViewMediator;
-})();
+}();
 
 exports.default = ReactViewMediator;

@@ -60,6 +60,7 @@ export default class ReactViewMediator {
      *  });
      */
   constructor(config){
+    this.config = config
     this.layout = null;
     this.layouts = createLayouts(config.layouts);
     this.views = createFactories(config.views);
@@ -120,6 +121,7 @@ export default class ReactViewMediator {
    *  );
    */
   renderViews(newViews, params){
+    if (!(this.el)) this.el = document.querySelector(this.config.el)
 
     mapObject(newViews, (newView, region) => {
       this.views[newView].node = this.el.querySelector(region);
@@ -153,6 +155,8 @@ export default class ReactViewMediator {
   render(renderConfig){
     var params = renderConfig.params || renderConfig.props;
 
+    if (!(this.el)) this.el = document.querySelector(this.config.el)
+
     this.renderLayout(renderConfig.layout);
     this.removeViews(
       Object.keys(
@@ -162,7 +166,7 @@ export default class ReactViewMediator {
         )
       )
     );
-    this.renderViews(renderConfig.views, renderConfig.params);
+    this.renderViews(renderConfig.views, params);
   }
 
   /**
