@@ -1,93 +1,31 @@
-import chai from 'chai';
+var React = require('react'),
+    ReactDOM = require('react-dom'),
+    chai = require('chai'),
+    ReactViewMediator = require('../lib/ReactViewMediator'),
+    sut = require('./sut')
 
-import ReactDOM from 'react-dom';
-import {Views, Layouts} from './sut.jsx';
-import ReactViewMediator from '../index.js';
+var mediator = new ReactViewMediator(sut)
 
-var sut = new ReactViewMediator({
-  'el': 'body',
-  'layouts': Layouts,
-  'views': Views
-});
+describe('ReactViewMediator', function () {
 
-describe('viewMediator', function(){
+    mediator.render({
+        views: {}
+    })
 
-  it('should create an instance of the ViewMediator', function(){
-
-    chai.assert.isObject(sut, 'The ViewMediator is properly created');
-
-  });
-
-  it('should correctly render a view and a layout', function(){
-
-    sut.render({
-      'layout': 'MainLayout',
-      'views': {
-        '#content-region': 'HomeView'
-      }
-    });
-
-    chai.assert.isTrue(sut.views['HomeView'].isRendered);
-    chai.assert.isTrue(sut.layouts['MainLayout'].isRendered);
-    chai.assert.isDefined(ReactDOM.findDOMNode(sut.views['HomeView'].ref));
-
-  });
-
-  it('should successfully replace views in the same layout', function(){
-
-    sut.render({
-      'layout': 'MainLayout',
-      'views': {
-        '#content-region': 'PostView'
-      }
-    });
-
-    chai.assert.isFalse(sut.views['HomeView'].isRendered);
-    chai.assert.isNull(sut.views['HomeView'].ref);
-
-    chai.assert.isTrue(sut.views['PostView'].isRendered);
-    chai.assert.isTrue(sut.layouts['MainLayout'].isRendered);
-    chai.assert.isDefined(ReactDOM.findDOMNode(sut.views['PostView'].ref));
-
-  });
-
-
-  it('should remove views', function(){
-
-    sut.render({
-      'layout': 'MainLayout',
-      'views': {
-        '#content-region': 'PostView'
-      }
-    });
-
-
-    chai.assert.isDefined(ReactDOM.findDOMNode(sut.views['PostView'].ref))
-
-    sut.removeViews('PostView');
-
-    chai.assert.isFalse(sut.views['PostView'].isRendered);
-    chai.assert.isNull(sut.views['PostView'].ref);
-    chai.assert.isNull(ReactDOM.findDOMNode(sut.views['PostView'].ref));
-
-  });
-
-  it('should pass props/params to rendered views', function(){
+    console.log(
+        document.getElementById('main-region').innerHTML
+    )
     
-    sut.render({
-      'layout': 'SidebarLayout',
-      'views': {
-        '#content-region': 'SidebarView'
-      },
-      'props': {
-        'SidebarView': {
-          'testProp': true
+    mediator.render({
+        views: {
+            '#main-region': 'ViewOne'
         }
-      }
-    });
-    
-    chai.assert.equal(sut.views['SidebarView'].ref.props.testProp, true);
+    })
 
-  });
+    console.log(
+        document.getElementById('main-region').innerHTML
+    )
 
-});
+    chai.assert.isTrue(true)
+
+})

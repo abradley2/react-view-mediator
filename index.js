@@ -1,1 +1,1 @@
-module.exports = require('./dist/ReactViewMediator.js');
+module.exports = require('./lib/ReactViewMediator')
